@@ -38,12 +38,8 @@ export default function Navbar() {
     const background = theme.palette.background.default;
     const primaryLight = theme.palette.primary.light;
     const alt = theme.palette.background.alt;
+    const fullName = `${user.firstName} ${user.lastName}`;
 
-    useEffect(() => {
-        if (user) {
-            const fullName = `${user.firstName} ${user.lastName}`;
-        }
-    }, [user])
 
     return (
         <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -82,9 +78,9 @@ export default function Navbar() {
                     <Message sx={{ fontSize: "25px" }} />
                     <Notifications sx={{ fontSize: "25px" }} />
                     <Help sx={{ fontSize: "25px" }} />
-                    <FormControl variant="standard" value="Haru">
+                    <FormControl variant="standard" value={fullName}>
                         <Select
-                            value={"Haru"}
+                            value={fullName}
                             sx={{
                                 backgroundColor: neutralLight,
                                 width: "150px",
@@ -101,9 +97,9 @@ export default function Navbar() {
                             }}
                             input={<InputBase />}
                         >
-                            <MenuItem value={"Haru"}>
+                            <MenuItem value={fullName}>
                                 <Typography>
-                                    Haru
+                                    {fullName}
                                 </Typography>
                             </MenuItem>
                             <MenuItem onClick={() => dispatch(setLogout())}>
@@ -139,12 +135,46 @@ export default function Navbar() {
                             <Close />
                         </IconButton>
                     </Box>
+                    {/* menu items */}
+                    <FlexBetween display="flex" flexDirection="column" justifyContent="center" alignItems="center" boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px;" gap="2rem" paddingY="2rem">
+                        <IconButton onClick={() => dispatch(setMode())}>
+                            {theme.palette.mode === "dark" ? <DarkMode sx={{ fontSize: "25px" }} /> : <LightMode sx={{ fontSize: "25px", color: dark }} />}
+                        </IconButton>
+                        <Message sx={{ fontSize: "25px" }} />
+                        <Notifications sx={{ fontSize: "25px" }} />
+                        <Help sx={{ fontSize: "25px" }} />
+                        <FormControl variant="standard" value={fullName}>
+                            <Select
+                                value={fullName}
+                                sx={{
+                                    backgroundColor: neutralLight,
+                                    width: "150px",
+                                    borderRadius: "0.25rem",
+                                    p: "0.25rem 1rem",
+                                    "& .MuiSvgIcon-root": {
+                                        pr: "0.25rem",
+                                        width: "3rem"
+                                    },
+                                    "& .MuiSelect-select:focus": {
+                                        pr: "0.25rem",
+                                        width: "3rem"
+                                    },
+                                }}
+                                input={<InputBase />}
+                            >
+                                <MenuItem value={fullName}>
+                                    <Typography>
+                                        {fullName}
+                                    </Typography>
+                                </MenuItem>
+                                <MenuItem onClick={() => dispatch(setLogout())}>
+                                    Log Out
+                                </MenuItem>
+                            </Select>
+                        </FormControl>
+                    </FlexBetween>
                 </Box>
-
-                // menu items
-                
-            )
-            }
+            )}
         </FlexBetween>
-    )
-}
+    );
+};
